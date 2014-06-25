@@ -13,7 +13,7 @@ df.leg=data.frame(
            "No flood occurs", 
            "Flood occurs",
            "Normative boundary",
-           "Threshold of acceptable performance\n  (Epistemic boundary)\n",
+           "Threshold of acceptable performance\n  (epistemic boundary)\n",
            "T8a, T8b Selected model instances at limits\n  of epistemic boundary\n",
            "T8c Selected model instances where user has\n to check whether epistemic boundary is
   breached, i.e. performance is unacceptable",
@@ -23,7 +23,7 @@ df.leg=data.frame(
   density=c(NA,NA,25,rep(NA,5)),
   angle=c(NA,NA,45,rep(NA,5)),
   border=c(NA,"grey","grey",rep(NA,5)),
-  col=c(NA,NA,NA,"grey","grey","blue","blue","black"),
+  col=c(NA,NA,NA,"grey","blue","blue","blue","black"),
   pch=c(rep(NA,3),rep(NA,2),3,4,19), #3 should be +
   pt.cex=c(rep(NA,3),rep(NA,2),2,2,0.7),
   lwd=c(rep(NA,3),2,1,rep(NA,3)),
@@ -89,7 +89,7 @@ plot(pred.sm,obj.sm,xlim=c(0,30),col="black",pch=19,cex=0.7,
      xlab="Annual flow (mm)",ylab="Max absolute error (mm)")
 polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=2,angle=45)
 abline(v=7.6,lwd=2,col="grey")
-abline(h=0.18,col="grey",lty="dashed")
+abline(h=0.18,col="blue",lty="dashed")
 mtext(" d) ",side=3,adj=0,line=-1.5,cex=0.8)
 points(pred.sm[w.extreme.sm],
        obj.sm[w.extreme.sm],
@@ -103,7 +103,7 @@ polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=2,angle=4
 abline(v=7.6,lwd=2,col="grey")
 segments(x0=-10,x1=7,y0=thres.lik.lo,y1=thres.lik.lo,
          col="grey",lty="dashed")
-abline(h=thres.lik.hi,col="grey",lty="dashed")
+abline(h=thres.lik.hi,col="blue",lty="dashed")
 mtext(" e) ",side=3,adj=0,line=-2,cex=0.8)
 points(pred.lik[w.extreme.lik],
        obj.lik[w.extreme.lik],

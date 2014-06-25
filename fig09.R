@@ -1,6 +1,6 @@
 ## Figure 9 - Parameter bounds and set membership
 
-leg.height<-1.1
+leg.height<-1.5
 #win.metafile("fig09 pars sm.wmf",width=3.54,height=3+leg.height)
 png("fig09 pars sm.png",width=3.54,height=3+leg.height,units="in",res=70)
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
@@ -13,18 +13,19 @@ df.leg=data.frame(
   legend=c("Not physically\n  possible",
            "No flood occurs", 
            "Flood occurs",
-           "T5 Parameter\n   bounds",
-           "T6 Sampled\n  feasible set"
+           "Normative bound.",
+           "T5 Parameter\n     bounds\n(epistemic bound.)\n",
+           "T6 Samples from\n    feasible set\n(epistemic bound.)\n"
   ),
-  fill=c("grey90","white","grey",NA,NA),
-  density=c(NA,NA,25,NA,NA),
-  angle=c(NA,NA,45,NA,NA),
-  border=c(NA,"grey","grey",NA,NA),
-  col=c(NA,NA,NA,"black","black"),
-  lwd=c(NA,NA,NA,1,NA),
-  lty=c(rep(NA,3),1,NA),
-  pch=c(rep(NA,4),"."),
-  pt.cex=c(rep(NA,4),3),
+  fill=c("grey90","white","grey",rep(NA,3)),
+  density=c(NA,NA,25,rep(NA,3)),
+  angle=c(NA,NA,45,rep(NA,3)),
+  border=c(NA,"grey","grey",rep(NA,3)),
+  col=c(NA,NA,NA,"grey","black","black"),
+  lwd=c(NA,NA,NA,2,1,NA),
+  lty=c(rep(NA,3),1,1,NA),
+  pch=c(rep(NA,5),"."),
+  pt.cex=c(rep(NA,5),3),
   stringsAsFactors=FALSE
 )
 par(mar=c(0,1.1,0,1.1),cex=0.8)

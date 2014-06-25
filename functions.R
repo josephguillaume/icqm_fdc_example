@@ -25,7 +25,7 @@ plot.good.flood <- function(){
   lines(x=seq(7.6,50,length.out=100),y=bb(seq(7.6,50,length.out=100)),col="grey",lwd=2)
   polygon(x=c(7.6,100,100,seq(50,7.6,length.out=100)),
           y=c(bb(7.6),bb(7.6),0,bb(seq(50,7.6,length.out=100))),
-          col="grey",density=2,angle=45)
+          col="grey",density=8,angle=45)
   box()
 }
 

@@ -17,7 +17,7 @@ df.leg=data.frame(
            "Confidence interval\n  (epistemic boundary)\n",
            "Points in critical region",
            "Points in confidence interval",
-           "Critical values"
+           "Critical values - extremes\n  of confidence interval"
   ),
   fill=c("grey90","white","grey",rep(NA,2),NA,NA,NA),
   density=c(NA,NA,25,rep(NA,2),NA,NA,NA),
