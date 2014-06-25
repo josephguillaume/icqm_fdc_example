@@ -1,6 +1,6 @@
 ## T7 MCMC
 
-leg.height<-0.9
+leg.height<-1.3
 #win.metafile("fig11 mcmc.wmf",width=7,height=3+leg.height)
 png("fig11 mcmc.png",width=7,height=5+leg.height,units="in",res=70)
 
@@ -44,7 +44,7 @@ points(ys,runif(length(ys),min=-0.005,max=0.005),
        col=ifelse(keep,"grey50","red"),
        pch=ifelse(keep,19,1)
        )
-polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=2,angle=45)
+polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=8,angle=45)
 abline(v=quantile(ys,c((1 - level)/2,1 - (1 - level)/2)),lty=2,col="blue")
 abline(v=7.6,lwd=2,col="grey")
 mtext(" a) ",side=3,adj=0,line=-1,cex=0.8)
