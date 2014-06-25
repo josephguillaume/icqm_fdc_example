@@ -1,6 +1,6 @@
 ## Plot scenarios (M4)
 
-##win.metafile("fig08 scen.wmf",width=3.5,height=3)
+#win.metafile("fig08 scen.wmf",width=7,height=6)
 png("fig08 scen.png",width=7,height=6,units="in",res=70)
 layout(matrix(c(2,4,3,1), nrow = 2), heights = c(3, 3))
 
@@ -40,6 +40,7 @@ par(cex=0.8,mar=c(5.1,4.1,1.1,1.1))
 
 ## Engineering works
 plot.good.flood()
+mtext(" a) ",side=3,adj=0,line=-1.5,cex=0.8)
 Qthres <- 6.6
 bb <- partition(1/365,Qthres)
 lines(x=seq(6.6,50,length.out=100),y=bb(seq(6.6,50,length.out=100)),col="grey",lwd=2)
@@ -52,6 +53,7 @@ text(t(c(14.5,3.6)),labels="Engineering works\ncause unexpected\nchanges in flow
 
 ## Releases
 plot.good.flood()
+mtext(" b) ",side=3,adj=0,line=-1.5,cex=0.8)
 points(t(start.pos),pch=1)
 text(t(start.pos),labels="Status quo",adj=c(1.1,-0.2))
 points(t(c(17,4.3)),pch=13)
@@ -61,6 +63,7 @@ text(t(c(16.5,4.2)),labels="Flow losses\ncause release\nto fail",adj=c(0.1,1.2))
 
 ## Marginal scenarios
 plot.good.flood()
+mtext(" c) ",side=3,adj=0,line=-1.5,cex=0.8)
 points(t(c(flood = 16.2020202020202, monthly = 4.38383838383838)),pch=19)
 text(t(c(flood = 16.2020202020202, monthly = 4.38383838383838)),labels="Scarce water used\nfor environmental\nflow release. Farmers\nreceive government\nsupport.",adj=c(0.2,-0.1))
 points(t(c(11.13131,3.777778)),pch=19)
