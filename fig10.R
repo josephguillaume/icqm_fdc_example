@@ -1,8 +1,8 @@
 ## T7 MCMC
 
 leg.height<-1.3
-#win.metafile("fig11 mcmc.wmf",width=7,height=3+leg.height)
-png("fig11 mcmc.png",width=7,height=5+leg.height,units="in",res=70)
+#win.metafile("fig10 mcmc.wmf",width=7,height=3+leg.height)
+png("fig10 mcmc.png",width=7,height=3+leg.height,units="in",res=70)
 
 layout(matrix(c(1,2,1,3), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
@@ -39,7 +39,7 @@ do.call(legend,modifyList(as.list(df.leg),list(x="bottom",ncol=3,bty="n")))
 ##################################################################
 
 par(cex=0.8,mar=c(5.1,4.1,1.1,1.1))
-plot(density(ys),xlab="Annual flow (mm)\nN=3335, Bandwidth=0.22",main="")
+plot(density(ys),xlab="Annually recurring runoff\n(mm/day) N=3335, Bandwidth=0.22",main="")
 points(ys,runif(length(ys),min=-0.005,max=0.005),
        col=ifelse(keep,"grey50","red"),
        pch=ifelse(keep,19,1)
@@ -48,7 +48,12 @@ polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=8,angle=4
 abline(v=quantile(ys,c((1 - level)/2,1 - (1 - level)/2)),lty=2,col="blue")
 abline(v=7.6,lwd=2,col="grey")
 mtext(" a) ",side=3,adj=0,line=-1,cex=0.8)
-points(lik.ht.pars.ys,c(0,0),pch=3,col="blue",cex=1.5)
+points(lik.crit.pars.ys,c(0,0),pch=3,col="blue",cex=1.5)
+
+## Note that the critical value itself (calculated as the quantile) 
+##  may not actually be produced by any sampled model scenario,
+##  so the displayed model scenario is that which provides the
+##  highest value lower than the critical value
 
 ##################################################################
 ## Normative and epistemic set diagrams in parameter space
@@ -60,6 +65,6 @@ points(psets2,cex=0.4,##cex=1,pch=".",
        col=ifelse(keep,"grey50","red"),
        pch=ifelse(keep,19,1)
 )
-points(lik.ht.pars,pch=3,col="blue",cex=1.5)
+points(lik.crit.pars.orig,pch=3,col="blue",cex=1.5)
 mtext(" b) ",side=3,adj=0,line=-1,cex=0.8)
 dev.off()
