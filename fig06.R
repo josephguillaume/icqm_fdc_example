@@ -1,6 +1,6 @@
 leg.height=1.4
-#win.metafile("fig07 explore par space.wmf",width=3.54,height=3+leg.height)
-png("fig07 explore par space.png",width=3.54,height=3+leg.height,res=70,units="in")
+##win.metafile("fig06 explore par space.wmf",width=3.54,height=3+leg.height)
+png("fig06 explore par space.png",width=3.54,height=3+leg.height,res=70,units="in")
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
 ##################################################################
@@ -14,7 +14,7 @@ df.leg=data.frame(
            "T1 Analytical solution of normative boundary",
            "T2 PRIM boxes",
            "T3 Reference best guess model scenario",
-           "T3 POMORE break-even points"
+           "T3 POMORE break-points"
   ),
   fill=c("grey90","white","grey",NA,NA,NA,NA),
   density=c(NA,NA,25,NA,NA,NA,NA),
