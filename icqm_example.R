@@ -43,18 +43,7 @@ pts[1]=log10(10^pts[1]-10^pts[2]) ## delta log10(Q) and log10(Q)
 
 ################################################################################
 ##_* Plot observations and linear model fit
-
-png("fig06 observed fdc.png",width=3.54,height=3,units="in",res=70)
-##win.metafile("fig06 observed fdc.wmf",width=3.54,height=3)
-par(cex=0.8,mar=c(5.1,4.1,1.1,1.1))
-plot(xs,fdc.q,log="y",
-     ylab="Flow (mm)",
-     xlab="qnorm(Exceedance probability)")
-abline(mm)
-points(qnorm(1/(100*365)),quantile(Q,1-1/(100*365)),pch="+")
-points(qnorm(1/(1/12*365)),quantile(Q,1-1/(1/12*365)),pch="+")
-abline(v=qnorm(1/(c(100,1/12)*365)),col="grey50",lty="dashed")
-dev.off()
+source("fig05.R")
 
 ################################################################################
 ##_* Sample whole parameter space
@@ -76,15 +65,20 @@ pom.good <- POMORE(FUN.still.better=function(p,start.pos) !is.good.flood(p),
 pom.good2 <- pom.good[order(pom.good[,1]),][seq(1,nrow(pom.good),length.out=8),]
 ##_  . Plot pomore normalised distances
 
-png("fig08 pomore.png",width=3.54,height=3,units="in",res=70)
-##win.metafile("fig08 pomore.wmf",width=3.54,height=3)
+png("fig07 pomore.png",width=3.54,height=3,units="in",res=70)
+##win.metafile("fig07 pomore.wmf",width=3.54,height=3)
 par(cex=0.7)
 par(mar=c(5.1,4.1,1.1,1.1))
 boxplot(cbind(abs(pom.good[,1]-start.pos[1])/start.pos[1],
            abs(pom.good[,2]-start.pos[2])/start.pos[2]),
-        names=c(expression(q[1]),expression(q[2])),
-        xlab="Parameter",ylab="Normalised distance"
+        names=NA,
+        xlab=NA,ylab="Normalised distance"
         )
+axis(side=1,at=1:2,padj=0.6,cex.axis=0.8,
+     labels=as.expression(c(bquote(atop(q[1]~"100 yr flood","(mm/day)")),
+                                   bquote(atop(q[2]~"Monthly recurring","runoff (mm/day)"))
+     )))
+title(xlab="Parameters",line=3.5)
 dev.off()
 
 ################################################################################
@@ -114,7 +108,7 @@ if(!exists("myboxes.good")){
 }
 
 ##_ , Plot all explore alternatives
-source("fig07.R")
+source("fig06.R")
 
 ##_* Plot scenarios (M4)
 
@@ -157,22 +151,26 @@ paret.max <- hydromad::paretoFilter(cbind(-ys,-objseq)) ##slow
 paret.min <- hydromad::paretoFilter(cbind(ys,-objseq))  ##slow
 pareto.front <- paret.max|paret.min
 
-## Likelihood threshold for hyp testing
-thres.lik.lo <- min(objseq[which(keep & pareto.front)[order(ys[keep & pareto.front],decreasing=F)][1]]) ## Lik of lowest y value on pareto front
-thres.lik.hi <- min(objseq[which(keep & pareto.front)[order(ys[keep & pareto.front],decreasing=T)][1]]) ## Lik of highest y value on pareto front
-
 psets2 <- cbind(rowSums(10^psets),10^psets[,2])
 
-# hard-coded result from M8b because they are mutually dependent
-## Warning: result from any single run may differ
-lik.ht.pars <- matrix(c(8.44598275902987, 21.4774398003501, 2.92690003299676, 4.99546011684257),ncol=2)
-lik.ht.pars.trans <- cbind(log10(lik.ht.pars[,1]- lik.ht.pars[,2]),
-                        log10(lik.ht.pars[,2]))
-lik.ht.pars.ys <- apply(lik.ht.pars.trans,1,fdc.pred,probs=1/365)
-
+## Parameters of lowest and highest y values (i.e. critical values)
+lik.crit.pars <- psets[keep & pareto.front,][c(
+  which.min(ys[keep & pareto.front]),
+  which.max(ys[keep & pareto.front])
+),]
+lik.crit.pars.ys <- apply(lik.crit.pars,1,fdc.pred,probs=1/365)
+lik.crit.pars.orig <- cbind(rowSums(10^lik.crit.pars),10^lik.crit.pars[,2])
 
 ##_ , Plot of density, confidence interval/critical region and corresponding models
-source("fig11.R")
+source("fig10.R")
+
+
+## Likelihood threshold for hyp testing
+## The results with the lowest and highest y values on the pareto 
+##   front and within the confidence interval
+thres.lik.lo <- objseq[keep & pareto.front][which.min(ys[keep & pareto.front])]
+thres.lik.hi <- objseq[keep & pareto.front][which.max(ys[keep & pareto.front])]
+
 
 ################################################################################
 ##_* Hypothesis testing results (M8)
@@ -188,6 +186,18 @@ trad.maxSM <- nsga2(function(p) c(max.abs.err(p),-fdc.pred(p,probs=1/365)),
                   lower.bounds=c(0,0),upper.bounds=c(2,1),
                   generations=200,popsize=200,mprob=1/2
                   )
+
+pars.sm <-as.matrix(10^rbind(trad.minSM$par,trad.maxSM$par))
+pars.sm <- cbind(pars.sm[,1]+pars.sm[,2],pars.sm[,2]) ## convert from delta
+obj.sm <- c(trad.minSM$value[,1],trad.maxSM$value[,1])
+pred.sm <- c(trad.minSM$value[,2],-trad.maxSM$value[,2])
+
+## Select the model scenarios with the min and max annual runoff within feasible set
+ord <- order(pred.sm)
+w.extreme.sm <- c(head(ord[ord %in% which(obj.sm<0.18)],1),
+                  tail(ord[ord %in% which(obj.sm<0.18)],1))
+                      
+
 ##_ , With value directly - likelihood (M8b)
 trad.minLik <- nsga2(function(p) c(-calc.rmse(log10(fdc.pred(p)),log10(fdc.q)),
                             fdc.pred(p,probs=1/365)),
@@ -199,6 +209,17 @@ trad.maxLik <- nsga2(function(p) c(-calc.rmse(log10(fdc.pred(p)),log10(fdc.q)),
               idim=2,odim=2,
               lower.bounds=c(0,0),upper.bounds=c(2,1)
               )
+
+pars.lik <-as.matrix(10^rbind(trad.minLik$par,trad.maxLik$par))
+pars.lik <- cbind(pars.lik[,1]+pars.lik[,2],pars.lik[,2])
+obj.lik <- c(-trad.minLik$value[,1],-trad.maxLik$value[,1])
+pred.lik <- c(trad.minLik$value[,2],-trad.maxLik$value[,2])
+
+## Select the model scenarios with the min and max annual runoff within likelihood thresholds from T7
+ord <- order(pred.lik)
+w.extreme.lik <- c(head(ord[ord %in% which(obj.lik>thres.lik.lo)],1),
+                   tail(ord[ord %in% which(obj.lik>thres.lik.hi)],1))
+
 ##_ , Maximising fit to threshold - good flood (M8c)
 set.seed(1)
 trad.fit <- nsga2(function(p) c(-calc.rmse(log10(fdc.pred(p)),log10(fdc.q)),
@@ -208,6 +229,14 @@ trad.fit <- nsga2(function(p) c(-calc.rmse(log10(fdc.pred(p)),log10(fdc.q)),
                   generations=500,popsize=400,mprob=1/2
                   )
 
+pars.fit <-as.matrix(10^unique(trad.fit$par))
+obj.fit <- c(-trad.fit$value[,1])
+pars.fit <- cbind(pars.fit[,1]+pars.fit[,2],pars.fit[,2])
+pred.fit <- trad.fit$value[,2]
+
+## Select the model scenarios with the maximum and minimum fit
+w.extreme.fit <- c(which.min(obj.fit),which.max(obj.fit))
+
 
 ##_ , Plot of all hypothesis testing results (M8a,b,c)
-source("fig12.R")
+source("fig11.R")
