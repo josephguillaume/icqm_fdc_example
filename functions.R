@@ -15,8 +15,8 @@ partition <- function(pthres,Qthres){
 ## Requires global variable vv defining sample of whole parameter space (just to set correct scale)
 plot.good.flood <- function(){
   plot(vv[,1:2],col=NA,
-       xlab=bquote(q[1]~". 100 yr flood (mm)"),
-       ylab=bquote(q[2]~". Monthly flow (mm)")
+       xlab=bquote(q[1]~". 100 yr flood (mm/day)"),
+       ylab=bquote(q[2]~". Monthly recurring runoff (mm/day)")
   )
   bb <- partition(1/365,7.6)
   polygon(x=c(-5,100,-5),y=c(-5,100,100),col="grey90",border=NA)
