@@ -1,7 +1,7 @@
 ## Combined hypothesis testing plot
 leg.height=2.4
-#win.metafile("fig12 hyp test.wmf",width=7,height=5+leg.height)
-png("fig12 hyp test.png",width=7,height=5+leg.height,units="in",res=70)
+##win.metafile("fig11 hyp test.wmf",width=7,height=5+leg.height)
+png("fig11 hyp test.png",width=7,height=5+leg.height,units="in",res=70)
 layout(matrix(c(1,2,5,1,3,6,1,4,7), nrow = 3), 
        heights = c(leg.height/(5+leg.height), 2.7/(2.5+leg.height),2.3/(2.5+leg.height)))
 
@@ -41,42 +41,23 @@ par(cex=0.8,mar=c(5.1,4.1,3.1,1.1))
 
 ## Set membership
 plot.good.flood()
-pars.sm <-as.matrix(10^rbind(trad.minSM$par,trad.maxSM$par))
-pars.sm <- cbind(pars.sm[,1]+pars.sm[,2],pars.sm[,2]) ## convert from delta
-obj.sm <- c(trad.minSM$value[,1],trad.maxSM$value[,1])
-pred.sm <- c(trad.minSM$value[,2],-trad.maxSM$value[,2])
 points(pars.sm,pch=19,col="black",cex=0.7)
-ord <- order(pred.sm)
-w.extreme.sm <- c(head(ord[ord %in% which(obj.sm<0.18)],1),tail(ord[ord %in% which(obj.sm<0.18)],1))
 points(pars.sm[w.extreme.sm,],pch=3,col="blue",cex=2)
 mtext(" a) ",side=3,adj=0,line=-1.5,cex=0.8)
-title("T8a Optimisation - extreme values \nwith set membership",cex.main=0.9)
+title("T8a Optimisation - extreme\nvalues with set membership",cex.main=0.9)
 
 ## Likelihood
 plot.good.flood()
-pars <-as.matrix(10^rbind(trad.minLik$par,trad.maxLik$par))
-obj.lik <- c(-trad.minLik$value[,1],-trad.maxLik$value[,1])
-pred.lik <- c(trad.minLik$value[,2],-trad.maxLik$value[,2])
-pars <- cbind(pars[,1]+pars[,2],pars[,2])
-points(pars,pch=19,col="black",cex=0.7)
-ord <- order(pred.lik)
-w.extreme.lik <- c(head(ord[ord %in% which(obj.lik>-3.05)],1),
-                   tail(ord[ord %in% which(obj.lik>-2.37)],1))
-lik.ht.pars <- pars[w.extreme.lik,]
-points(lik.ht.pars,pch=3,col="blue",cex=2)
+points(pars.lik,pch=19,col="black",cex=0.7)
+points(pars.lik[w.extreme.lik,],pch=3,col="blue",cex=2)
 mtext(" b) ",side=3,adj=0,line=-1.5,cex=0.8)
-title("T8b Optimisation - extreme values \nwith likelihood",cex.main=0.9)
+title("T8b Optimisation - extreme\nvalues with likelihood",cex.main=0.9)
 
 ## Fit
-pars <-as.matrix(10^unique(trad.fit$par))
-obj.fit <- c(-trad.fit$value[,1])
-pars <- cbind(pars[,1]+pars[,2],pars[,2])
 plot.good.flood()
-points(pars,pch=19,col="black",cex=0.7)
-w.extreme.fit <- c(which.min(obj.fit),which.max(obj.fit))
-points(pars[w.extreme.fit,],pch=4,col="blue",cex=2)
+points(pars.fit,pch=19,col="black",cex=0.7)
+points(pars.fit[w.extreme.fit,],pch=4,col="blue",cex=2)
 mtext(" c) ",side=3,adj=0,line=-1.5,cex=0.8)
-pred.fit <- trad.fit$value[,2]
 title("T8c Optimisation - \nfitting threshold",cex.main=0.9)
 
 ##################################################################
@@ -86,7 +67,7 @@ par(cex=0.8,mar=c(5.1,4.1,0,1.1))
 
 ## Set Membership
 plot(pred.sm,obj.sm,xlim=c(0,30),col="black",pch=19,cex=0.7,
-     xlab="Annual flow (mm)",ylab="Max absolute error (mm)")
+     xlab="Annually recurring runoff\n(mm/day)",ylab="Max absolute error (mm/day)")
 polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=2,angle=45)
 abline(v=7.6,lwd=2,col="grey")
 abline(h=0.18,col="blue",lty="dashed")
@@ -97,7 +78,7 @@ points(pred.sm[w.extreme.sm],
 
 ## Likelihood
 plot(pred.lik,obj.lik,xlim=c(0,30),col="black",pch=19,cex=0.7,
-     xlab="Annual flow (mm)",ylab="Log Likelihood"
+     xlab="Annually recurring runoff\n(mm/day)",ylab="Log Likelihood"
 )
 polygon(x=c(7.6,100,100,7.6),y=c(-100,-100,100,100),col="grey",density=2,angle=45)
 abline(v=7.6,lwd=2,col="grey")
@@ -111,8 +92,8 @@ points(pred.lik[w.extreme.lik],
 
 ## Fit
 plot(pred.fit,obj.fit,pch=19,cex=0.7,
-     xlab="Difference from threshold\n flow (mm)",
-     ylab="Fit to observations (Log Likelihood)")
+     xlab="Difference from threshold\n runoff (mm/day)",
+     ylab="Fit to observations (Log Lik.)")
 polygon(x=c(-100,0,0,-100),y=c(-100,-100,100,100),col="grey",density=2,angle=45)
 abline(v=0,lwd=2,col="grey")
 mtext("   f) ",side=3,adj=0,line=-1.5,cex=0.8)
