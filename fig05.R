@@ -1,5 +1,5 @@
 leg.height=1.3
-png("fig05 observed fdc.png",width=3.54,height=3+leg.height,units="in",res=70)
+png("fig05 observed fdc.png",width=3.54,height=3+leg.height,units="in",res=300)
 ##win.metafile("fig05 observed fdc.wmf",width=3.54,height=3+leg.height)
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
@@ -33,13 +33,13 @@ do.call(legend,modifyList(as.list(df.leg),list(x="center",ncol=1,bty="n")))
 ##################################################################
 ## Log-normal plot of flow duration curve
 ##################################################################
-par(cex=0.8,mar=c(5.1,5.1,1.1,1.1))
+par(cex=0.8,mar=c(5.1,4.1,1.1,1.1))
 plot(xs,log10(fdc.q),
      yaxt="n",ylim=c(-0.65,log10(15)),
      ylab=NA,
      xlab="qnorm(Exceedance probability)")
 axis(2,at=log10(c(0.5,1.0,2.0,5.0,10.0)),labels=c("0.5","1.0","2.0","5.0","10.0"),cex.axis=0.8)
-title(ylab="Runoff (mm/day)\non log10 scale)",line=2.5)
+title(ylab="Runoff (mm/day)")
 polygon(y=log10(c(7.6,100,100,7.6)),x=c(-100,-100,100,100),col="grey",density=8,angle=45)
 abline(h=log10(7.6),lwd=2,col="grey")
 points(xs,log10(fdc.q))
