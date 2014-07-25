@@ -2,8 +2,8 @@
 
 leg.height<-1.3
 #win.metafile("fig10 mcmc.wmf",width=7,height=3+leg.height)
-png("fig10 mcmc.png",width=7,height=3+leg.height,units="in",res=70)
-
+png("fig10 mcmc.png",width=7,height=3+leg.height,units="in",res=300)
+#postscript("fig10 mcmc.eps",width=7,height=3+leg.height)
 layout(matrix(c(1,2,1,3), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
 ##################################################################

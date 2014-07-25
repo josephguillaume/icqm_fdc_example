@@ -1,7 +1,8 @@
 ## Combined hypothesis testing plot
 leg.height=2.4
 ##win.metafile("fig11 hyp test.wmf",width=7,height=5+leg.height)
-png("fig11 hyp test.png",width=7,height=5+leg.height,units="in",res=70)
+png("fig11 hyp test.png",width=7,height=5+leg.height,units="in",res=300)
+##postscript("fig11 hyp test.eps",width=7,height=5+leg.height)
 layout(matrix(c(1,2,5,1,3,6,1,4,7), nrow = 3), 
        heights = c(leg.height/(5+leg.height), 2.7/(2.5+leg.height),2.3/(2.5+leg.height)))
 

@@ -1,6 +1,7 @@
 leg.height=1.3
 png("fig05 observed fdc.png",width=3.54,height=3+leg.height,units="in",res=300)
 ##win.metafile("fig05 observed fdc.wmf",width=3.54,height=3+leg.height)
+##postscript("fig05 observed fdc.eps",width=3.54,height=3+leg.height)
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
 ##################################################################

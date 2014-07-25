@@ -1,7 +1,8 @@
 ## Plot scenarios (M4)
 
 #win.metafile("fig08 scen.wmf",width=7,height=6)
-png("fig08 scen.png",width=7,height=6,units="in",res=70)
+png("fig08 scen.png",width=7,height=6,units="in",res=300)
+#postscript("fig08 scen.eps",width=7,height=6)
 layout(matrix(c(2,4,3,1), nrow = 2), heights = c(3, 3))
 
 ##################################################################

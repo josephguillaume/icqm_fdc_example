@@ -65,8 +65,9 @@ pom.good <- POMORE(FUN.still.better=function(p,start.pos) !is.good.flood(p),
 pom.good2 <- pom.good[order(pom.good[,1]),][seq(1,nrow(pom.good),length.out=8),]
 ##_  . Plot pomore normalised distances
 
-png("fig07 pomore.png",width=3.54,height=3,units="in",res=70)
+png("fig07 pomore.png",width=3.54,height=3,units="in",res=300)
 ##win.metafile("fig07 pomore.wmf",width=3.54,height=3)
+##postscript("fig07 pomore.eps",width=3.54,height=3)
 par(cex=0.7)
 par(mar=c(5.1,4.1,1.1,1.1))
 boxplot(cbind(abs(pom.good[,1]-start.pos[1])/start.pos[1],

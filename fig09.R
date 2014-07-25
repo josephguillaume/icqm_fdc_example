@@ -2,7 +2,8 @@
 
 leg.height<-1.5
 #win.metafile("fig09 pars sm.wmf",width=3.54,height=3+leg.height)
-png("fig09 pars sm.png",width=3.54,height=3+leg.height,units="in",res=70)
+png("fig09 pars sm.png",width=3.54,height=3+leg.height,units="in",res=300)
+#postscript("fig09 pars sm.eps",width=3.54,height=3+leg.height)
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
 ##################################################################

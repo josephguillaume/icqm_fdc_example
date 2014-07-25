@@ -1,6 +1,7 @@
 leg.height=1.4
 ##win.metafile("fig06 explore par space.wmf",width=3.54,height=3+leg.height)
-png("fig06 explore par space.png",width=3.54,height=3+leg.height,res=70,units="in")
+png("fig06 explore par space.png",width=3.54,height=3+leg.height,res=300,units="in")
+##postscript("fig06 explore par space.eps",width=3.54,height=3+leg.height)
 layout(matrix(c(1,2), nrow = 2), heights = c(leg.height/(3+leg.height), 3/(3+leg.height)))
 
 ##################################################################
