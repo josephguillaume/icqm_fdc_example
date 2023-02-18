@@ -1,5 +1,4 @@
-Prediction under uncertainty as a boundary problem
-================
+# Prediction under uncertainty as a boundary problem
 
 Code for the article:
 
@@ -13,4 +12,4 @@ Quickstart:
 1. Download the zip and extract the files
 2. Open icqm_example.R in R's editor or Rstudio
 3. Run the code. This will make use of the other files as required.
-Each plot is produced in png format in the working directory.
+   Each plot is produced in png format in the working directory.
